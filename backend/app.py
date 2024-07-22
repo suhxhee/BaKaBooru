@@ -12,7 +12,7 @@ app = Flask(__name__)
 cors = CORS()
 cors.init_app(app, resource={r"/api/*": {"origins": "*"}})
 
-# 连接到 MongoDB
+# 初始化数据库
 client = MongoClient('localhost', 27017)
 db = client['image_database']
 fs = gridfs.GridFS(db)
@@ -24,25 +24,23 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
 @app.route('/api/upload', methods=['POST'])
-def upload_file():
-    file = list(request.files.values())[0]
+def upload():
+    file = next(iter(request.files.values()))
+    filename = secure_filename(file.filename)
 
     print(f"Received file: {file.filename}, Content Type: {file.content_type}")
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
 
-    filename = secure_filename(file.filename)
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    # 获取文件路径
+    file_path = Path(app.config['UPLOAD_FOLDER']) / filename
+    # 将上传文件保存到本地
     file.save(file_path)
-
     # 获取文件大小
     file_size = os.path.getsize(file_path)
-
-    # 将文件保存到 MongoDB GridFS
+    # 将本地文件保存到数据库
     with open(file_path, 'rb') as f:
         file_id = fs.put(f, filename=filename)
-
     # 删除本地保存的文件
     os.remove(file_path)
 
@@ -66,7 +64,7 @@ def list_images():
 @app.route('/api/images/<image_id>', methods=['GET'])
 def get_image(image_id):
     image = fs.get(ObjectId(image_id))
-    return send_file(BytesIO(image.read()), download_name=image_id+'.jpg', mimetype=image.content_type)
+    return send_file(BytesIO(image.read()), download_name=image_id + '.jpg', mimetype=image.content_type)
 
 
 if __name__ == '__main__':
