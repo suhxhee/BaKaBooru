@@ -1,14 +1,20 @@
 const routes = [
-   {
-    path: '/',
-    redirect: '/images' // 当访问根路径时，自动跳转到/images
-  },
+
   {
-    path: '/images',
+    path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      {path: '', component: () => import('pages/Images.vue')},
-    ]
+      {
+        path:'image',
+        name:'ImagesPage',
+        component: () => import('pages/ImagesPage.vue'),
+      },
+      {
+        path:'update',
+        name:'UpdatePage',
+        component: () => import('pages/UpdatePage.vue'),
+      },
+    ],
   },
   {
     path: '/:catchAll(.*)*',
