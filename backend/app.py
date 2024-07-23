@@ -27,13 +27,15 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/api/upload', methods=['POST'])
 def upload():
+    # 获取文件
     file = next(iter(request.files.values()))
+    # 获取文件名
     filename = secure_filename(file.filename)
-
-    print(f"Received file: {file.filename}, Content Type: {file.content_type}")
-
     # 获取文件路径
     file_path = Path(app.config['UPLOAD_FOLDER']) / filename
+
+    print(f"POST: 图片 \"{file.filename}\"上传成功!")
+
     # 将上传文件保存到本地
     file.save(file_path)
     # 获取文件大小
@@ -44,13 +46,13 @@ def upload():
     # 删除本地保存的文件
     os.remove(file_path)
 
+    # 返回信息
     file_info = {
         'file_id': str(file_id),
         'filename': filename,
         'size': file_size,
         'content_type': file.content_type
     }
-
     return jsonify(file_info), 200
 
 
