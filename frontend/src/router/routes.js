@@ -5,8 +5,12 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path:'image',
-        name:'ImagesPage',
+        path: '',
+        redirect: '/gallery'
+       },
+      {
+        path:'gallery',
+        name:'GalleryPage',
         component: () => import('pages/ImagesPage.vue'),
       },
       {

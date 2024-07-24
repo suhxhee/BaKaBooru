@@ -25,7 +25,7 @@
       >
       <q-list>
         <!-- 菜单项: 图片库 -->
-        <q-item clickable v-ripple @click="goToPage('ImagesPage')">
+        <q-item clickable v-ripple @click="goToPage('GalleryPage')">
           <q-item-section avatar> <q-icon name="image" /> </q-item-section>
           <q-item-section> <q-item-label>图库</q-item-label> </q-item-section>
         </q-item>

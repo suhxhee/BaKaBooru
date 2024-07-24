@@ -15,7 +15,9 @@ cors.init_app(app, resource={r"/api/*": {"origins": "*"}})
 # 初始化数据库
 client = MongoClient('localhost', 27017)
 db = client['image_database']
+images_collection = db['images']
 fs = gridfs.GridFS(db)
+
 
 # 设置上传文件的保存路径
 UPLOAD_FOLDER = 'uploads'
@@ -46,13 +48,19 @@ def upload():
     # 删除本地保存的文件
     os.remove(file_path)
 
-    # 返回信息
+    group_id = images_collection.count_documents({})
+
     file_info = {
-        'file_id': str(file_id),
-        'filename': filename,
-        'size': file_size,
-        'content_type': file.content_type
+        "group_id": group_id,
+        "original_image": {
+            "file_id": str(file_id),
+            "filename": filename,
+            'size': file_size,
+            'content_type': file.content_type
+        }
     }
+
+    # images_collection.insert_one(file_info)
     return jsonify(file_info), 200
 
 
