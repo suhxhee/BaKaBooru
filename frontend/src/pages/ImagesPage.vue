@@ -41,8 +41,8 @@ onMounted(fetchImages);
 <style scoped>
 
 .img{
-   width: 200px;
-   height: 280px;
+   width: 150px;
+   height: 210px;
 }
 
 </style>
