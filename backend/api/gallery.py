@@ -22,8 +22,6 @@ def get_thumbnail(set_id):
     result = db_ImageGallery.find_one({'id': set_id})
     if not result:
         return "Set not found", 404
-
     thumbnail_file_id = result.get('thumbnail')
-
     image = db_fs.get(ObjectId(thumbnail_file_id))
     return send_file(BytesIO(image.read()), download_name=set_id + '.jpg', mimetype=image.content_type)

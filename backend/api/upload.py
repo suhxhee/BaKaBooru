@@ -20,7 +20,7 @@ def get_thumbnail_file(original_file_path, thumbnail_image_path, width, height):
         img_width, img_height = img.size
 
         # 裁剪图片
-        if img_width > img_height:
+        if img_width >= img_height:
             left = (img_width - img_height * width / height) / 2
             top = 0
             right = (img_width + img_height * width / height) / 2
@@ -30,10 +30,11 @@ def get_thumbnail_file(original_file_path, thumbnail_image_path, width, height):
             top = (img_height - img_width * height / width) / 2
             right = img_width
             bottom = (img_height + img_width * height / width) / 2
-        img.crop((left, top, right, bottom))
+        img = img.crop((left, top, right, bottom))
 
         # 缩小图片并保存图片
-        img.resize((width, height), Image.Resampling.LANCZOS).save(thumbnail_image_path)
+        img = img.resize((width, height), Image.Resampling.LANCZOS)
+        img.save(thumbnail_image_path)
 
 
 @upload_bp.route('/upload', methods=['POST'])
