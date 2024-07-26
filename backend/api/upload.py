@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 from backend.db import db_fs, db_ImageGallery
 from pathlib import Path
 from PIL import Image
+import uuid
 import os
 
 upload_bp = Blueprint('upload', __name__, url_prefix='/api')
@@ -39,15 +40,14 @@ def get_thumbnail_file(original_file_path, thumbnail_image_path, width, height):
 
 @upload_bp.route('/upload', methods=['POST'])
 def upload():
-    # 占位
-    key = db_ImageGallery.insert_one({}).inserted_id
-    set_id = str(db_ImageGallery.count_documents({})-1)
-
     # 获取文件缓存
     file = next(iter(request.files.values()))
     filename = secure_filename(file.filename)
     original_file_path = Path(CACHE_FOLDER) / filename
     file.save(original_file_path)
+
+    # 生成图集ID
+    set_id = str(uuid.uuid4())
 
     # 生成缩略图
     thumbnail_image_path = Path(CACHE_FOLDER) / f"{set_id} -thumbnail 200x280{Path(filename).suffix}"
@@ -75,7 +75,7 @@ def upload():
             }
         }
     }
-    db_ImageGallery.replace_one({'_id': key}, ImageSet_info)
+    db_ImageGallery.insert_one(ImageSet_info)
 
     print(f"[后台] POST: 图片\"{file.filename}\"上传成功。(Image Set ID: {set_id})")
 
