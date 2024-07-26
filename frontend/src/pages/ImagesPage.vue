@@ -1,17 +1,30 @@
 <template>
-  <div class="q-gutter-xs">
-    <div class="row q-gutter-sm q-pa-sm" >
-      <q-card v-for="image in images" :key="image.id">
-        <q-img
-          :src="getImageUrl(image.id)"
-          @mouseover="image.isHovered = true"
-          @mouseleave="image.isHovered = false"
-          :style="{ filter: image.isHovered ? 'brightness(90%)' : 'brightness(100%)' }"
-          class="img"
-        />
-      </q-card>
+  <q-page>
+    <div>
+      <header class="q-ma-lg row">
+        <div class="row">
+         <p class="text-h5">默认图库</p>
+         <span class="text-h5">({{images.length}})</span>
+        </div>
+        <div class="q-ml-auto">
+          <q-btn @click="clearGallery">
+            <q-icon name="delete"/>清空图库
+          </q-btn>
+        </div>
+      </header>
+      <main class="row q-gutter-xs q-pa-sm">
+        <q-card v-for="image in images" :key="image.id">
+          <q-img
+            :src="getThumbnailUrl(image.id)"
+            @mouseover="image.isHovered = true"
+            @mouseleave="image.isHovered = false"
+            :style="{ filter: image.isHovered ? 'brightness(90%)' : 'brightness(100%)' }"
+            class="img"
+          />
+        </q-card>
+      </main>
     </div>
-  </div>
+  </q-page>
 </template>
 
 
@@ -27,9 +40,14 @@ const fetchImages = async () => {
 
 };
 
-const getImageUrl = (imageId) => {
+const getThumbnailUrl = (imageId) => {
   return `http://localhost:5000/api/set/${imageId}/thumbnail`;
 };
+
+const clearGallery = () => {
+  axios.delete('http://localhost:5000/api/gallery/clear')
+};
+
 
 onMounted(fetchImages);
 </script>
@@ -41,5 +59,6 @@ onMounted(fetchImages);
    width: 150px;
    height: 210px;
 }
+
 
 </style>

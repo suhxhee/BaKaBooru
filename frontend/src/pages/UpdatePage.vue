@@ -1,13 +1,15 @@
 <template>
   <q-page padding>
-    <q-uploader
-      url="http://localhost:5000/api/upload"
-      label="上传图像"
-      @uploaded="handleUpload"
-      accept="image/*"
-      multiple
-      auto-upload
-    />
+    <div class="row justify-center">
+      <q-uploader
+        url="http://localhost:5000/api/upload"
+        label="上传图像"
+        @uploaded="handleUpload"
+        accept="image/*"
+        multiple
+        auto-upload
+      />
+    </div>
   </q-page>
 </template>
 

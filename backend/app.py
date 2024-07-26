@@ -7,9 +7,11 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 # 注册蓝图
 from api.upload import upload_bp
 from api.gallery import gallery_bp
+from api.delete import delete_bp
 
 app.register_blueprint(upload_bp)
 app.register_blueprint(gallery_bp)
+app.register_blueprint(delete_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)
