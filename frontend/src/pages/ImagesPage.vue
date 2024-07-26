@@ -23,7 +23,7 @@ const images = ref([]);
 
 const fetchImages = async () => {
   try {
-    const response = await axios.get('http://localhost:5000/api/images');
+    const response = await axios.get('http://localhost:5000/api/gallery');
     images.value = response.data;
   } catch (error) {
     console.error('Failed to fetch images:', error);
@@ -31,7 +31,7 @@ const fetchImages = async () => {
 };
 
 const getImageUrl = (imageId) => {
-  return `http://localhost:5000/api/images/${imageId}`;
+  return `http://localhost:5000/api/set/${imageId}`;
 };
 
 onMounted(fetchImages);

@@ -3,5 +3,5 @@ import gridfs
 
 client = MongoClient('localhost', 27017)
 db = client['bakabooru']
-fs = gridfs.GridFS(db)
-images = db['images']
+db_fs = gridfs.GridFS(db)
+db_gallery = db['gallery']
