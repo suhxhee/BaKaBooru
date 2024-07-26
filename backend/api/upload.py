@@ -39,17 +39,18 @@ def get_thumbnail_file(original_file_path, thumbnail_image_path, width, height):
 
 @upload_bp.route('/upload', methods=['POST'])
 def upload():
+    # 占位
+    key = db_ImageGallery.insert_one({}).inserted_id
+    set_id = str(db_ImageGallery.count_documents({})-1)
+
     # 获取文件缓存
     file = next(iter(request.files.values()))
     filename = secure_filename(file.filename)
     original_file_path = Path(CACHE_FOLDER) / filename
     file.save(original_file_path)
 
-    # 获取图集ID
-    set_id = str(db_ImageGallery.count_documents({}))
-    thumbnail_image_path = Path(CACHE_FOLDER) / f"{set_id} -thumbnail 200x280{Path(filename).suffix}"
-
     # 生成缩略图
+    thumbnail_image_path = Path(CACHE_FOLDER) / f"{set_id} -thumbnail 200x280{Path(filename).suffix}"
     get_thumbnail_file(original_file_path, thumbnail_image_path, 200, 280)
 
     # 将文件存入数据库
@@ -74,7 +75,7 @@ def upload():
             }
         }
     }
-    db_ImageGallery.insert_one(ImageSet_info)
+    db_ImageGallery.replace_one({'_id': key}, ImageSet_info)
 
     print(f"[后台] POST: 图片\"{file.filename}\"上传成功。(Image Set ID: {set_id})")
 
