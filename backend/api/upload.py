@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.utils import secure_filename
-from backend.db import db_fs, db_gallery
+from backend.db import db_fs, db_ImageGallery
 from pathlib import Path
 from PIL import Image
 import os
@@ -45,7 +45,7 @@ def upload():
     file.save(original_file_path)
 
     # 获取图集ID
-    set_id = db_gallery.count_documents({})
+    set_id = str(db_ImageGallery.count_documents({}))
     thumbnail_image_path = Path(CACHE_FOLDER) / f"{set_id} -thumbnail 200x280{Path(filename).suffix}"
 
     # 生成缩略图
@@ -62,7 +62,7 @@ def upload():
     os.remove(thumbnail_image_path)
 
     # 保存图集信息
-    set_info = {
+    ImageSet_info = {
         "id": set_id,
         "thumbnail": thumbnail_file_id,
         "original_images": {
@@ -73,8 +73,8 @@ def upload():
             }
         }
     }
-    db_gallery.insert_one(set_info)
+    db_ImageGallery.insert_one(ImageSet_info)
 
-    print(f"[后台] POST: \"{file.filename}\"上传成功，图集ID: {set_info}。")
+    print(f"[后台] POST: 图片\"{file.filename}\"上传成功。(Image Set ID: {set_id})")
 
     return jsonify({"group_id": original_file_id}), 200

@@ -22,16 +22,13 @@ import axios from 'axios';
 const images = ref([]);
 
 const fetchImages = async () => {
-  try {
-    const response = await axios.get('http://localhost:5000/api/gallery');
-    images.value = response.data;
-  } catch (error) {
-    console.error('Failed to fetch images:', error);
-  }
+  const response = await axios.get('http://localhost:5000/api/gallery');
+  images.value = response.data;
+
 };
 
 const getImageUrl = (imageId) => {
-  return `http://localhost:5000/api/set/${imageId}`;
+  return `http://localhost:5000/api/set/${imageId}/thumbnail`;
 };
 
 onMounted(fetchImages);
