@@ -13,17 +13,15 @@
     <q-drawer
         v-model="drawer"
         show-if-above
-
         :mini="miniState"
         @mouseover="miniState = false"
         @mouseout="miniState = true"
-
-        :width="200"
+        :width="180"
         :breakpoint="500"
         bordered
-        class="bg-grey-3"
+        class="bg-white "
       >
-      <q-list>
+      <q-list class="text-h6 q-gutter-sm q-py-sm">
         <!-- 菜单项: 图片库 -->
         <q-item clickable v-ripple @click="goToPage('GalleryPage')">
           <q-item-section avatar> <q-icon name="image" /> </q-item-section>
@@ -50,7 +48,7 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="bg-grey-1">
       <router-view />
     </q-page-container>
 

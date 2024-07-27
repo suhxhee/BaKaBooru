@@ -1,6 +1,5 @@
 <template>
-  <q-page>
-    <div>
+  <q-page >
       <header class="q-ma-lg row">
         <div class="row">
          <p class="text-h5">默认图库</p>
@@ -12,7 +11,7 @@
           </q-btn>
         </div>
       </header>
-      <main class="row q-gutter-xs q-pa-sm">
+      <main class="row q-gutter-xs q-pa-sm ">
         <q-card v-for="set in gallery" :key="set.id">
           <q-img
             :src="getThumbnailUrl(set.id)"
@@ -23,7 +22,6 @@
           />
         </q-card>
       </main>
-    </div>
   </q-page>
 </template>
 

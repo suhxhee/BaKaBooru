@@ -11,7 +11,7 @@ db_ImageGallery = db['ImageGallery']
 
 # 初始化计数器
 db_Counters = db['IDCounters']
-# set_id计数器
+# 初始化set_id计数器
 if db_Counters.count_documents({"_id": "set_id"}) == 0:
     db_Counters.insert_one({"_id": "set_id", "seq": -1})
 
