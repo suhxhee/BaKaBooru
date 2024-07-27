@@ -19,7 +19,7 @@
             @mouseover="set.isHovered = true"
             @mouseleave="set.isHovered = false"
             :style="{ filter: set.isHovered ? 'brightness(90%)' : 'brightness(100%)' }"
-            class="img"
+            class="thumbnail_large"
           />
         </q-card>
       </main>
@@ -55,9 +55,17 @@ onMounted(fetchImages);
 
 <style scoped>
 
-.img{
+.thumbnail_large{
+   width: 200px;
+   height: 280px;
+}
+.thumbnail_normal{
    width: 150px;
    height: 210px;
+}
+.thumbnail_small{
+   width: 100px;
+   height: 140px;
 }
 
 

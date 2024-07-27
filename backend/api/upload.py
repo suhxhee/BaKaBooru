@@ -1,9 +1,8 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.utils import secure_filename
-from backend.db import db_fs, db_ImageGallery
+from backend.db import db_fs, db_ImageGallery, get_sequence
 from pathlib import Path
 from PIL import Image
-import uuid
 import os
 
 upload_bp = Blueprint('upload', __name__, url_prefix='/api')
@@ -47,11 +46,11 @@ def upload():
     file.save(original_file_path)
 
     # 生成图集ID
-    set_id = str(uuid.uuid4())
+    set_id = str(get_sequence('set_id'))
 
     # 生成缩略图
     thumbnail_image_path = Path(CACHE_FOLDER) / f"{set_id} -thumbnail 200x280{Path(filename).suffix}"
-    get_thumbnail_file(original_file_path, thumbnail_image_path, 200, 280)
+    get_thumbnail_file(original_file_path, thumbnail_image_path, 300, 420)
 
     # 将文件存入数据库
     with open(original_file_path, 'rb') as f:
