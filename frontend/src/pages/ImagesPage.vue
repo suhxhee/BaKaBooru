@@ -11,13 +11,13 @@
           </q-btn>
         </div>
       </header>
-      <main class="row q-gutter-xs q-pa-sm ">
+      <main class="row q-gutter-xs q-pa-sm">
         <q-card v-for="set in gallery" :key="set.id">
           <q-img
             :src="getThumbnailUrl(set.id)"
             @mouseover="set.isHovered = true"
             @mouseleave="set.isHovered = false"
-            :style="{ filter: set.isHovered ? 'brightness(90%)' : 'brightness(100%)' }"
+            :style="{ filter: set.isHovered ?isHoverStyle: notHoverStyle}"
             class="thumbnail_large"
           />
         </q-card>
@@ -27,8 +27,28 @@
 
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, watch} from 'vue';
+import {Dark, useQuasar} from 'quasar'
 import axios from 'axios';
+const $q = useQuasar()
+const isDark = ref($q.dark.isActive)
+
+const isHoverStyle =  ref(isDark.value?'brightness(70%)':'brightness(90%)');
+const notHoverStyle =  ref(isDark.value?'brightness(80%)':'brightness(100%)')
+// 监听深色模式的变化
+watch(() => $q.dark.isActive, (newVar) => {
+  if(newVar) {
+    isHoverStyle.value = 'brightness(70%)';
+    notHoverStyle.value =  'brightness(80%)'
+  }
+  else {
+    isHoverStyle.value = 'brightness(90%)';
+    notHoverStyle.value =  'brightness(100%)'
+  }
+
+
+
+})
 
 const gallery = ref([]);
 

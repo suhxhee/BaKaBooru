@@ -7,6 +7,8 @@
         <q-toolbar-title>
           BaKaBooru
         </q-toolbar-title>
+        <q-btn @click="toggleDarkMode" :icon="darkModeIcon" >
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -19,7 +21,6 @@
         :width="180"
         :breakpoint="500"
         bordered
-        class="bg-white "
       >
       <q-list class="text-h6 q-gutter-sm q-py-sm">
         <!-- 菜单项: 图片库 -->
@@ -48,7 +49,7 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container class="bg-grey-1">
+    <q-page-container>
       <router-view />
     </q-page-container>
 
@@ -60,9 +61,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import { useRouter } from 'vue-router';
+import { Dark } from 'quasar'
 
+const isDark = ref(Dark.isActive)
+
+const toggleDarkMode = () => {
+  isDark.value = !isDark.value
+  Dark.set(isDark.value)
+}
+
+const darkModeIcon = computed(() => isDark.value ? 'light_mode' : 'dark_mode')
 const drawer = ref(false);
 const miniState = ref(true);
 const router = useRouter();
