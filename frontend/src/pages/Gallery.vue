@@ -1,5 +1,5 @@
 <template>
-  <q-page >
+  <q-page class="q-ma-lg">
       <header class="q-ma-lg row">
         <div class="row">
          <p class="text-h5">默认图库</p>

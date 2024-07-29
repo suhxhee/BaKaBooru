@@ -11,7 +11,7 @@ const routes = [
       {
         path:'gallery',
         name:'GalleryPage',
-        component: () => import('pages/ImagesPage.vue'),
+        component: () => import('pages/Gallery.vue'),
       },
       {
         path:'update',
