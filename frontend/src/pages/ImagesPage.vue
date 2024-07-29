@@ -28,7 +28,7 @@
 
 <script setup>
 import {ref, onMounted, watch} from 'vue';
-import {Dark, useQuasar} from 'quasar'
+import { useQuasar} from 'quasar'
 import axios from 'axios';
 const $q = useQuasar()
 const isDark = ref($q.dark.isActive)
@@ -45,8 +45,6 @@ watch(() => $q.dark.isActive, (newVar) => {
     isHoverStyle.value = 'brightness(90%)';
     notHoverStyle.value =  'brightness(100%)'
   }
-
-
 
 })
 
