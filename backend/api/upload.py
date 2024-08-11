@@ -49,7 +49,7 @@ def upload():
     set_id = str(get_sequence('set_id'))
 
     # 生成缩略图
-    thumbnail_image_path = Path(CACHE_FOLDER) / f"{set_id} -thumbnail 200x280{Path(filename).suffix}"
+    thumbnail_image_path = Path(CACHE_FOLDER) / f"{set_id} -thumbnail 300x420{Path(filename).suffix}"
     get_thumbnail_file(original_file_path, thumbnail_image_path, 300, 420)
 
     # 将文件存入数据库
@@ -65,7 +65,12 @@ def upload():
     # 保存图集信息
     ImageSet_info = {
         "id": set_id,
-        "thumbnail": thumbnail_file_id,
+        "thumbnail_images": {
+            "file_id": thumbnail_file_id,
+            "file_name": thumbnail_image_path.name,
+            "width": 300,
+            "height": 420,
+        },
         "original_images": {
             "image_0": {
                 "file_id": original_file_id,

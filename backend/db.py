@@ -1,4 +1,5 @@
-from pymongo import MongoClient,ReturnDocument
+from pymongo import MongoClient, ReturnDocument
+
 import gridfs
 
 # 初始化数据库
@@ -12,16 +13,26 @@ db_ImageGallery = db['ImageGallery']
 # 初始化计数器
 db_Counters = db['IDCounters']
 # 初始化set_id计数器
-if db_Counters.count_documents({"_id": "set_id"}) == 0:
-    db_Counters.insert_one({"_id": "set_id", "seq": -1})
+if db_Counters.count_documents({"id": "set_id"}) == 0:
+    db_Counters.insert_one({"id": "set_id", "seq": -1})
 
 
 # 计数器函数
 def get_sequence(name):
     counter = db_Counters.find_one_and_update(
-        {'_id': name},
+        {'id': name},
         {'$inc': {'seq': 1}},
         return_document=ReturnDocument.AFTER,
         upsert=True
     )
     return counter['seq']
+
+
+# 重置计数器
+def reset_sequence(name):
+    counter = db_Counters.find_one_and_update(
+        {'id': name},
+        {'$set': {'seq': -1}},
+        return_document=ReturnDocument.AFTER,
+        upsert=True
+    )
