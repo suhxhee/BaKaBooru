@@ -64,23 +64,23 @@ def upload():
 
     # 保存图集信息
     ImageSet_info = {
-        "id": set_id,
+        'id': set_id,
         "thumbnail_images": {
-            "file_id": thumbnail_file_id,
-            "file_name": thumbnail_image_path.name,
-            "width": 300,
-            "height": 420,
+            'file_id': thumbnail_file_id,
+            'file_name': thumbnail_image_path.name,
+            'width': 300,
+            'height': 420,
         },
         "original_images": {
-            "image_0": {
-                "file_id": original_file_id,
-                "filename": filename,
+            "0": {
+                'file_id': original_file_id,
+                'file_name': filename,
                 'content_type': file.content_type
             }
         }
     }
     db_ImageGallery.insert_one(ImageSet_info)
 
-    print(f"[后台] POST: 图片\"{file.filename}\"上传成功。(Image Set ID: {set_id})")
+    print(f"[后台] POST: 图片\"{file.filename}\"上传成功。(set_id:{set_id})")
 
     return jsonify({"group_id": original_file_id}), 200
