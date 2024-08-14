@@ -30,12 +30,8 @@
         </q-item>
         <!-- 菜单项: 上传 -->
         <q-item clickable v-ripple @click="goToPage('UpdatePage')">
-          <q-item-section avatar>
-            <q-icon name="update" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>上传</q-item-label>
-          </q-item-section>
+          <q-item-section avatar> <q-icon name="update" /> </q-item-section>
+          <q-item-section> <q-item-label>上传</q-item-label> </q-item-section>
         </q-item>
          <!-- 菜单项: 设置 -->
         <q-item clickable v-ripple @click="goToPage('settings')">

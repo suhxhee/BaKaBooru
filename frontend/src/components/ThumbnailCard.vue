@@ -1,5 +1,6 @@
 <template>
   <q-card>
+    <ThumbnailCardMenu :set_id=set_id />
     <q-img
       :src="getThumbnailUrl(set_id)"
       @mouseover="isHovered = true"
@@ -16,10 +17,11 @@
 
 <script setup>
 import {ref} from "vue";
+import ThumbnailCardMenu from "components/ThumbnailCardMenu.vue";
 
 const props = defineProps({
   set_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   thumbnail_width: {
@@ -45,16 +47,5 @@ const showImage = (set_id)=>{
 </script>
 
 <style scoped>
-.thumbnail_large{
-   width: 200px;
-   height: 280px;
-}
-.thumbnail_normal{
-   width: 150px;
-   height: 210px;
-}
-.thumbnail_small{
-   width: 100px;
-   height: 140px;
-}
+
 </style>

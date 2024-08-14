@@ -9,7 +9,6 @@ gallery_bp = Blueprint('gallery', __name__, url_prefix='/api')
 @gallery_bp.route('/gallery', methods=['GET'])
 def gallery():
     ImageGallery = db_ImageGallery.find()
-
     ImageGallery_info = [{'id': ImageSet.get('id')} for ImageSet in ImageGallery]
 
     print(f"[后台] GET: 成功获取{len(ImageGallery_info)}个图集信息。")
